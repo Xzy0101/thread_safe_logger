@@ -9,19 +9,27 @@
 #define LOGGER_API __declspec(dllimport)
 #endif
 
-#include <fstream>
-#include <string>
-#include <mutex>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-class LOGGER_API Logger {
-public:
-	explicit Logger(std::string filename);
-	void write(std::string message);
-	~Logger();
-private:
-	std::ofstream log;
-	std::mutex mtx;
-	const std::string currentDateTime();
-};
+#include <stdio.h>
+#include <process.h>
+#include <Windows.h>
+
+	typedef struct LOGGER_API {
+		FILE* file;
+		HANDLE mtx;
+	} Logger;
+
+	LOGGER_API Logger* logger_init(const char* filename);
+	LOGGER_API int logger_lock(Logger* logger);
+	LOGGER_API int logger_unlock(Logger* logger);
+	LOGGER_API void logger_cleanup(Logger* logger);
+
+	
+#ifdef __cplusplus
+}
+#endif
 
 #endif
