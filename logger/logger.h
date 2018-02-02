@@ -1,13 +1,13 @@
 #pragma once
 
+#ifndef LOGGER_H
+#define LOGGER_H
+
 #ifdef LOGGER_EXPORTS
 #define LOGGER_API __declspec(dllexport)
 #else
 #define LOGGER_API __declspec(dllimport)
 #endif
-
-#ifndef LOGGER_H
-#define LOGGER_H
 
 #include <fstream>
 #include <string>
